@@ -177,7 +177,7 @@ const About: React.FC = () => {
           </div>
           
           <div className="relative">
-            <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-green-200 transform md:translate-x-[-50%] hidden sm:block"></div>
+            <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-orange-200 transform md:translate-x-[-50%] hidden sm:block"></div>
             
             <div className="space-y-12">
               {timeline.map((item, index) => <div key={index} className={cn("relative flex flex-col sm:flex-row items-start gap-8 animate-fade-in", index % 2 === 0 ? "md:flex-row-reverse text-left md:text-right" : "text-left")} style={{
@@ -185,25 +185,25 @@ const About: React.FC = () => {
               }}>
                   <div className="sm:w-1/2"></div>
                   
-                  <div className={cn("hidden sm:block absolute top-8 w-8 h-0.5 bg-green-200", 
+                  <div className={cn("hidden sm:block absolute top-8 w-8 h-0.5 bg-orange-200", 
                     index % 2 === 0 ? "left-[calc(50%-2rem)] md:left-1/2" : "right-[calc(50%-2rem)] md:right-1/2"
                   )}></div>
 
-                  <div className="absolute left-[-20px] md:left-1/2 transform md:translate-x-[-50%] w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center font-bold z-10 shadow-lg hover:scale-110 transition-transform duration-300">
+                  <div className="absolute left-[-20px] md:left-1/2 transform md:translate-x-[-50%] w-12 h-12 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold z-10 shadow-lg hover:scale-110 transition-transform duration-300">
                     <GitBranch size={20} />
                   </div>
                   
-                  <div className={cn("sm:w-1/2 bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300", index % 2 === 0 ? "sm:pr-12" : "sm:pl-12")}>
+                  <div className={cn("sm:w-1/2 bg-orange-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-orange-100", index % 2 === 0 ? "sm:pr-12" : "sm:pl-12")}>
                     <div className="flex sm:hidden items-center mb-3">
-                      <div className="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center mr-3">
+                      <div className="w-10 h-10 rounded-full bg-orange-600 text-white flex items-center justify-center mr-3">
                         <Calendar size={18} />
                       </div>
-                      <span className="font-display font-bold text-lg">{item.year}</span>
+                      <span className="font-display font-bold text-lg text-orange-800">{item.year}</span>
                     </div>
                     <div className="sm:block">
-                      <span className="font-display font-bold text-xl hidden sm:block mb-2">{item.year}</span>
-                      <h3 className="text-lg font-medium mb-2">{item.title}</h3>
-                      <p className="text-foreground/70">{item.description}</p>
+                      <span className="font-display font-bold text-xl hidden sm:block mb-2 text-orange-800">{item.year}</span>
+                      <h3 className="text-lg font-medium mb-2 text-orange-900">{item.title}</h3>
+                      <p className="text-orange-700/80">{item.description}</p>
                     </div>
                   </div>
                 </div>)}
