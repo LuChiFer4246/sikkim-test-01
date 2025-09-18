@@ -14,45 +14,45 @@ type SlideData = {
 const slides: SlideData[] = [
   {
     id: 1,
-    imageSrc: '/lovable-uploads/44997248-2a7d-4c4b-8656-13d704d35b37.png',
-    title: 'Riverside Cottages',
-    subtitle: 'Cozy accommodations with stunning views of the Kali River'
+    imageSrc: '/lovable-uploads/2bbf5848-053c-4f28-96bc-dac23d6a8b34.png',
+    title: 'Rumtek Monastery',
+    subtitle: 'The Golden Temple of Sikkim - Seat of Kagyu Buddhism with stunning traditional architecture'
   },
   {
     id: 2,
-    imageSrc: '/lovable-uploads/cc6dd7ad-c5fb-4fef-9dd0-f8dca5d5a10d.png',
-    title: 'Western Ghats Panorama',
-    subtitle: 'Experience breathtaking views of the pristine Western Ghats and Kali River'
+    imageSrc: '/lovable-uploads/849faf99-8ef2-4028-bb7f-9b1fd88877ee.png',
+    title: 'Pemayangtse Monastery',
+    subtitle: 'Perfect Sublime Lotus - Sikkim\'s second oldest monastery with breathtaking Himalayas views'
   },
   {
     id: 3,
-    imageSrc: '/lovable-uploads/968e9c7f-6872-4c43-ad59-1dd92c92d29a.png',
-    title: 'Jungle Trekking Adventures',
-    subtitle: 'Explore the dense forests and hills of Dandeli on guided trek experiences'
+    imageSrc: '/lovable-uploads/fa6d6df3-ea4b-4f3f-9db1-81fbb2370f9f.png',
+    title: 'Enchey Monastery',
+    subtitle: 'The Solitary Temple blessed by Lama Druptob Karpo with mystical charm and serenity'
   },
   {
     id: 4,
-    imageSrc: '/lovable-uploads/ac22646b-1aa2-41fc-8799-5ece999eabac.png', 
-    title: 'Marsh Crocodiles',
-    subtitle: 'Encounter these magnificent reptiles in their natural habitat'
+    imageSrc: '/lovable-uploads/627761c4-60f7-43ef-864e-7bfaab1c1dc6.png', 
+    title: 'Tashiding Monastery',
+    subtitle: 'Holy water blessed monastery perched on a hilltop between two sacred rivers'
   },
   {
     id: 5,
-    imageSrc: '/lovable-uploads/b4c6f3a5-3500-43ad-97e1-e69041317e64.png', 
-    title: 'Thrilling River Rafting',
-    subtitle: 'Navigate through exciting rapids on the Kali River with our expert guides'
+    imageSrc: '/lovable-uploads/968e9c7f-6872-4c43-ad59-1dd92c92d29a.png', 
+    title: 'Dubdi Monastery',
+    subtitle: 'Sikkim\'s oldest monastery founded in 1701, a sacred retreat in the dense forests'
   },
   {
     id: 6,
-    imageSrc: '/lovable-uploads/d6a0abf8-3fb5-4717-9fff-6a3a99f2becf.png',
-    title: 'Mountain Trekking',
-    subtitle: 'Breathtaking trails through pristine mountains and valleys'
+    imageSrc: '/lovable-uploads/44997248-2a7d-4c4b-8656-13d704d35b37.png',
+    title: 'Phensang Monastery',
+    subtitle: 'Ancient Buddhist temple with magnificent views of Kanchenjunga and pristine valleys'
   },
   {
     id: 7,
-    imageSrc: '/lovable-uploads/45ac4715-903c-4b9d-aaf3-c8fbe391b9a7.png',
-    title: 'Exciting Kali River Rafting',
-    subtitle: 'Experience the thrill of white water rafting with expert guides on the Kali River'
+    imageSrc: '/lovable-uploads/7185274f-a6c4-4980-b354-5641039bc323.png',
+    title: 'Ralang Monastery',
+    subtitle: 'Sacred Buddhist sanctuary hosting colorful festivals and preserving ancient traditions'
   }
 ];
 
@@ -156,7 +156,7 @@ const Hero: React.FC = () => {
                   to="/booking" 
                   className="btn-primary text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-110"
                 >
-                  Book Your Adventure
+                  Plan Monastery Visit
                 </Link>
               </div>
             </animated.div>
