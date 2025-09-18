@@ -118,20 +118,35 @@ const Hero: React.FC = () => {
           
           <div className="relative h-full flex flex-col items-center justify-center text-center px-4 z-20">
             <animated.div style={currentSlide === index ? textFloatProps : {}}>
-              <h1 
-                className={cn(
-                  "text-4xl md:text-5xl lg:text-7xl font-display font-bold text-white max-w-5xl leading-tight mb-4",
-                  "transition-all duration-700 transform",
-                  "text-shadow-lg",
-                  currentSlide === index ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-                )}
-                style={{
-                  color: '#FFFFFF', // Pure white color
-                  textShadow: '0 0 15px rgba(255, 255, 255, 0.7)'
-                }}
-              >
-                {slide.title}
-              </h1>
+              <div className="flex flex-col items-center mb-4">
+                <div 
+                  className={cn(
+                    "w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/30 mb-4 overflow-hidden",
+                    "transition-all duration-700 transform",
+                    currentSlide === index ? "translate-y-0 opacity-100 scale-100" : "translate-y-10 opacity-0 scale-95"
+                  )}
+                >
+                  <img 
+                    src={slide.imageSrc} 
+                    alt={slide.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h1 
+                  className={cn(
+                    "text-4xl md:text-5xl lg:text-7xl font-display font-bold text-white max-w-5xl leading-tight",
+                    "transition-all duration-700 transform",
+                    "text-shadow-lg",
+                    currentSlide === index ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                  )}
+                  style={{
+                    color: '#FFFFFF', // Pure white color
+                    textShadow: '0 0 15px rgba(255, 255, 255, 0.7)'
+                  }}
+                >
+                  {slide.title}
+                </h1>
+              </div>
               <p 
                 className={cn(
                   "text-lg md:text-xl text-white max-w-2xl mb-8",
