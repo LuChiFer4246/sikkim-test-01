@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
     name: 'Contact',
     path: '/contact'
   }];
-  return <header className={cn('fixed w-full top-0 z-50 transition-all duration-300', isScrolled ? 'glass py-3' : 'bg-transparent py-6')}>
+  return <header className={cn('fixed w-full top-0 z-50 transition-all duration-300 backdrop-blur-md border-b', isScrolled ? 'bg-background/95 border-border/40 py-3 shadow-sm' : 'bg-background/80 border-transparent py-6')}>
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Logo />
         
