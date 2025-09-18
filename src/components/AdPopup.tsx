@@ -45,50 +45,6 @@ export function AdPopup() {
             </button>
           </div>
 
-          <div className="p-6 space-y-4">
-            <DialogHeader>
-              <DialogTitle className="text-xl font-semibold text-center">
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  Special Offer! 🎉
-                </motion.div>
-              </DialogTitle>
-            </DialogHeader>
-
-            <motion.div 
-              className="text-center space-y-2"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <h3 className="text-2xl font-bold text-green-600">
-                Day Package at Just ₹799!
-              </h3>
-              <p className="text-muted-foreground">
-                Experience the best of Dandeli at an unbeatable price
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="flex flex-col gap-3"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              <Button 
-                onClick={handleWhatsAppClick}
-                className="bg-green-600 hover:bg-green-700"
-              >
-                Book Now on WhatsApp
-              </Button>
-              <Button variant="outline" className="w-full" onClick={() => setIsOpen(false)}>
-                Maybe Later
-              </Button>
-            </motion.div>
-          </div>
         </motion.div>
       </DialogContent>
     </Dialog>
