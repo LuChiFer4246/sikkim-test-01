@@ -64,19 +64,14 @@ const Navbar: React.FC = () => {
             <Search size={20} />
           </button>
           <ThemeToggle />
-          <Link to="/booking" className="btn-primary">
-            Book Now
-          </Link>
+          <Link to="/booking" className="btn-primary">Sign in
+        </Link>
         </div>
         
         {/* Mobile Right Controls */}
         <div className="md:hidden flex items-center gap-2">
           <ThemeToggle />
-          <button
-            className="text-foreground p-2"
-            onClick={toggleMenu}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          >
+          <button className="text-foreground p-2" onClick={toggleMenu} aria-label={isMenuOpen ? "Close menu" : "Open menu"}>
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
