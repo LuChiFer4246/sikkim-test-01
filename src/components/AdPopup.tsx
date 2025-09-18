@@ -37,11 +37,6 @@ export function AdPopup() {
           transition={{ duration: 0.3 }}
         >
           <div className="relative">
-            <img 
-              src="/lovable-uploads/f97f4d91-56e4-4e2f-bb73-93760030da48.png" 
-              alt="Day Package"
-              className={`w-full object-cover ${isMobile ? 'h-36' : 'h-48'}`}
-            />
             <button 
               onClick={() => setIsOpen(false)}
               className="absolute top-2 right-2 rounded-full bg-black/50 p-1 text-white hover:bg-black/70 transition-colors"
