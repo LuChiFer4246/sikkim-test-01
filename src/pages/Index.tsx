@@ -157,41 +157,41 @@ const Index: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[{
-              title: "Riverside Cottages",
-              image: "/lovable-uploads/44997248-2a7d-4c4b-8656-13d704d35b37.png",
-              description: "Wake up to the soothing sounds of the river",
-              price: "₹2,499",
+              title: "Losar Festival",
+              image: "/lovable-uploads/2bbf5848-053c-4f28-96bc-dac23d6a8b34.png",
+              description: "Tibetan New Year celebration with traditional dances and prayers",
+              season: "February - March",
               delay: 0
             }, {
-              title: "Treehouse Villas",
-              image: "/lovable-uploads/e254561c-a576-4abe-ba9b-a057e1ddc8d7.png",
-              description: "Elevated living with panoramic forest views",
-              price: "₹3,999",
+              title: "Saga Dawa Festival",
+              image: "/lovable-uploads/849faf99-8ef2-4028-bb7f-9b1fd88877ee.png",
+              description: "Sacred Buddhist festival commemorating Buddha's enlightenment",
+              season: "May - June",
               delay: 200
             }, {
-              title: "Luxury Tents",
+              title: "Pang Lhabsol",
               image: "/lovable-uploads/507d9972-fed7-467f-90af-7506080a19b4.png",
-              description: "Glamping experience with all modern amenities",
-              price: "₹1,999",
+              description: "Guardian deity festival unique to Sikkim with masked dances",
+              season: "August - September",
               delay: 400
-            }].map((accommodation, index) => <div key={index} className="overflow-hidden rounded-xl group shadow-md animate-slide-up hover-lift bg-white" style={{
-              animationDelay: `${accommodation.delay}ms`
+            }].map((festival, index) => <div key={index} className="overflow-hidden rounded-xl group shadow-md animate-slide-up hover-lift bg-white" style={{
+              animationDelay: `${festival.delay}ms`
             }}>
                     <div className="aspect-[4/3] overflow-hidden">
-                      <img src={accommodation.image} alt={accommodation.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <img src={festival.image} alt={festival.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-display font-semibold mb-2 group-hover:text-green-700 transition-colors">
-                        {accommodation.title}
+                      <h3 className="text-xl font-display font-semibold mb-2 group-hover:text-orange-700 transition-colors">
+                        {festival.title}
                       </h3>
                       <p className="text-foreground/70 mb-2">
-                        {accommodation.description}
+                        {festival.description}
                       </p>
-                      <p className="text-green-700 font-semibold mb-4">
-                        {accommodation.price} per night
+                      <p className="text-orange-700 font-semibold mb-4">
+                        {festival.season}
                       </p>
-                      <Link to="/accommodation" className="text-green-700 hover:underline inline-flex items-center group">
-                        View Details <ArrowRight size={16} className="ml-1 group-hover:translate-x-2 transition-transform duration-300" />
+                      <Link to="/activities" className="text-orange-700 hover:underline inline-flex items-center group">
+                        Experience Festival <ArrowRight size={16} className="ml-1 group-hover:translate-x-2 transition-transform duration-300" />
                       </Link>
                     </div>
                   </div>)}
