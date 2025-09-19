@@ -145,11 +145,11 @@ const OfferCard: React.FC<OfferProps> = ({
 
 const DiscountOffers: React.FC = () => {
   return (
-    <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50 relative overflow-hidden" id="day-package">
-      <div className="absolute inset-0 z-0 opacity-20">
-        <div className="absolute top-0 left-0 w-40 h-40 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div className="absolute top-20 right-20 w-40 h-40 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-green-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+    <section className="py-16 bg-background relative overflow-hidden" id="day-package">
+      <div className="absolute inset-0 z-0 opacity-30">
+        <div className="absolute top-0 left-0 w-40 h-40 bg-primary/20 rounded-full filter blur-3xl animate-blob"></div>
+        <div className="absolute top-20 right-20 w-40 h-40 bg-accent/30 rounded-full filter blur-3xl animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-primary/10 rounded-full filter blur-3xl animate-blob animation-delay-4000"></div>
       </div>
       
       <div className="container px-4 relative z-10">
@@ -160,10 +160,10 @@ const DiscountOffers: React.FC = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <span className="px-4 py-1.5 bg-purple-100 text-purple-800 rounded-full text-sm font-medium inline-block mb-4">
+          <span className="px-4 py-1.5 bg-primary text-primary-foreground rounded-full text-sm font-medium inline-block mb-4">
             Limited Time
           </span>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             Exclusive Discount Offers
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
