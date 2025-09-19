@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
             <Search size={20} />
           </button>
           <ThemeToggle />
-          <Link to="/booking" className="btn-primary">Sign in
+          <Link to="/booking" className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md font-medium transition-all duration-300 hover:shadow-lg hover:scale-105">Sign in
         </Link>
         </div>
         
@@ -98,7 +98,7 @@ const Navbar: React.FC = () => {
             <Search size={20} />
             Search
           </button>
-          <Link to="/booking" className="btn-primary text-center" onClick={() => setIsMenuOpen(false)}>
+          <Link to="/booking" className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 text-center" onClick={() => setIsMenuOpen(false)}>
             Book Now
           </Link>
         </nav>
