@@ -58,6 +58,6 @@ const Offer: React.FC<OfferProps> = ({
     </Card>;
 };
 const SpecialOffers: React.FC = () => {
-  return;
+  return <div></div>;
 };
 export default SpecialOffers;

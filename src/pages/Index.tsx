@@ -148,10 +148,10 @@ const Index: React.FC = () => {
           <div className="container px-4">
             <div className="text-center mb-16 animate-slide-up">
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-                Stunning Accommodations
+                Sacred Monasteries & Cultural Festivals
               </h2>
               <p className="text-foreground/70 max-w-2xl mx-auto">
-                Relax in comfort after your adventure in our thoughtfully designed spaces that blend with nature.
+                Experience the spiritual heart of Sikkim through ancient monasteries and vibrant cultural celebrations that bring centuries-old traditions to life throughout the year.
               </p>
             </div>
             
