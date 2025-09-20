@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { TextureLoader, SphereGeometry, BackSide } from 'three';
+import { TextureLoader, BackSide } from 'three';
 import { Play, Pause, Volume2, VolumeX, RotateCcw, ChevronLeft, ChevronRight, Accessibility } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -59,9 +59,7 @@ const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[50, 32, 32]} />
-      <meshBasicMaterial>
-        <primitive object={texture} attach="map" />
-      </meshBasicMaterial>
+      <meshBasicMaterial args={[{ map: texture, side: BackSide }]} />
     </mesh>
   );
 };
