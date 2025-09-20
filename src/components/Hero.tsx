@@ -169,7 +169,7 @@ const Hero: React.FC = () => {
               >
                 <Link 
                   to="/booking" 
-                  className="btn-primary text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-110"
+                  className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-md text-lg font-medium transition-all duration-300 transform hover:scale-110 hover:shadow-glow"
                 >
                   Plan Monastery Visit
                 </Link>
