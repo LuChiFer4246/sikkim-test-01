@@ -58,13 +58,16 @@ const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
     }
   });
 
-  // Create material with correct properties
-  const material = new MeshBasicMaterial({ map: texture, side: BackSide });
+  console.log('Texture loaded:', texture);
+  console.log('Image URL:', image);
 
   return (
     <mesh ref={meshRef}>
-      <sphereGeometry args={[50, 32, 32]} />
-      <primitive object={material} attach="material" />
+      <sphereGeometry args={[10, 32, 32]} />
+      <meshBasicMaterial>
+        <primitive object={texture} attach="map" />
+        <primitive object={BackSide} attach="side" />
+      </meshBasicMaterial>
     </mesh>
   );
 };
@@ -161,7 +164,8 @@ const MonasteryTours360: React.FC = () => {
         <div className="relative">
           {/* 360 Tour Container */}
           <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden border-2 border-orange-500/30 bg-gray-900">
-            <Canvas camera={{ position: [0, 0, 0], fov: 75 }}>
+            <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+              <ambientLight intensity={0.5} />
               <PanoramaSphere image={tour.image} />
             </Canvas>
 
