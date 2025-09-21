@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { TextureLoader, BackSide, MeshBasicMaterial } from 'three';
+
+
 import { Play, Pause, Volume2, VolumeX, RotateCcw, ChevronLeft, ChevronRight, Accessibility } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -46,31 +46,6 @@ const monasteryTours: MonasteryTour[] = [
   }
 ];
 
-const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
-  const meshRef = useRef<any>();
-  const texture = useLoader(TextureLoader, image);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.001;
-    }
-  });
-
-  useEffect(() => {
-    if (meshRef.current && texture) {
-      meshRef.current.material.map = texture;
-      meshRef.current.material.side = BackSide;
-      meshRef.current.material.needsUpdate = true;
-    }
-  }, [texture]);
-
-  return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[10, 32, 32]} />
-      <meshBasicMaterial />
-    </mesh>
-  );
-};
 
 const MonasteryTours360: React.FC = () => {
   const [currentTour, setCurrentTour] = useState(0);
@@ -164,10 +139,9 @@ const MonasteryTours360: React.FC = () => {
         <div className="relative">
           {/* 360 Tour Container */}
           <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden border-2 border-orange-500/30 bg-gray-900">
-            <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-              <ambientLight intensity={0.5} />
-              <PanoramaSphere image={tour.image} />
-            </Canvas>
+            <div className="w-full h-full">
+              <img src={tour.image} alt={`${tour.name} 360 panorama placeholder`} className="w-full h-full object-cover" loading="lazy" />
+            </div>
 
             {/* Tour Navigation */}
             <AnimatePresence>
