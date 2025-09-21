@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { TextureLoader, SphereGeometry, BackSide } from 'three';
 import { Play, Pause, Volume2, VolumeX, RotateCcw, ChevronLeft, ChevronRight, Accessibility } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import PanoramaViewer from './PanoramaViewer';
-import { usePanoramaControls } from '@/hooks/use-panorama-controls';
 
 interface MonasteryTour {
   id: string;
@@ -46,6 +46,25 @@ const monasteryTours: MonasteryTour[] = [
   }
 ];
 
+const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
+  const meshRef = useRef<any>();
+  const texture = useLoader(TextureLoader, image);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.001;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef}>
+      <sphereGeometry args={[50, 32, 32]} />
+      <meshBasicMaterial>
+        <primitive object={texture} attach="map" />
+      </meshBasicMaterial>
+    </mesh>
+  );
+};
 
 const MonasteryTours360: React.FC = () => {
   const [currentTour, setCurrentTour] = useState(0);
@@ -54,10 +73,6 @@ const MonasteryTours360: React.FC = () => {
   const [showTranscript, setShowTranscript] = useState(false);
   const [showAudioDescription, setShowAudioDescription] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  
-  // Use panorama controls hook
-  const panoramaControls = usePanoramaControls();
-  
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const tour = monasteryTours[currentTour];
@@ -68,23 +83,11 @@ const MonasteryTours360: React.FC = () => {
       switch (e.key) {
         case 'ArrowLeft':
           e.preventDefault();
-          if (e.shiftKey) {
-            // Navigate between tours
-            setCurrentTour((prev) => (prev - 1 + monasteryTours.length) % monasteryTours.length);
-          } else {
-            // Rotate panorama left
-            panoramaControls.setCurrentRotation(panoramaControls.currentRotation - 10);
-          }
+          setCurrentTour((prev) => (prev - 1 + monasteryTours.length) % monasteryTours.length);
           break;
         case 'ArrowRight':
           e.preventDefault();
-          if (e.shiftKey) {
-            // Navigate between tours
-            setCurrentTour((prev) => (prev + 1) % monasteryTours.length);
-          } else {
-            // Rotate panorama right
-            panoramaControls.setCurrentRotation(panoramaControls.currentRotation + 10);
-          }
+          setCurrentTour((prev) => (prev + 1) % monasteryTours.length);
           break;
         case ' ':
           e.preventDefault();
@@ -105,17 +108,12 @@ const MonasteryTours360: React.FC = () => {
           e.preventDefault();
           setShowControls(!showControls);
           break;
-        case 'r':
-        case 'R':
-          e.preventDefault();
-          panoramaControls.resetView();
-          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isPlaying, showTranscript, showAudioDescription, showControls, panoramaControls]);
+  }, [isPlaying, showTranscript, showAudioDescription, showControls]);
 
   const nextTour = () => {
     setCurrentTour((prev) => (prev + 1) % monasteryTours.length);
@@ -126,7 +124,7 @@ const MonasteryTours360: React.FC = () => {
   };
 
   const resetView = () => {
-    panoramaControls.resetView();
+    // Reset camera position logic would go here
     setIsPlaying(false);
   };
 
@@ -152,23 +150,17 @@ const MonasteryTours360: React.FC = () => {
           <p className="text-white max-w-2xl mx-auto mb-4">
             Immerse yourself in the sacred spaces of Sikkim's ancient monasteries. Navigate with keyboard, listen to audio descriptions, and read transcripts for a fully accessible experience.
           </p>
-          <div className="text-sm text-orange-300 space-y-1">
-            <p>Mouse: Click & drag to look around 360°</p>
-            <p>Keyboard: ← → ↑ ↓ (look around) | Shift + ← → (change tours) | Space (play/pause) | T (transcript) | A (audio) | R (reset view)</p>
+          <div className="text-sm text-orange-300">
+            <p>Keyboard: ← → (navigate) | Space (play/pause) | T (transcript) | A (audio description) | C (controls)</p>
           </div>
         </motion.div>
 
         <div className="relative">
           {/* 360 Tour Container */}
           <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden border-2 border-orange-500/30 bg-gray-900">
-            {/* 360 Panoramic Viewer */}
-            <PanoramaViewer
-              image={tour.image}
-              rotation={panoramaControls.currentRotation}
-              onRotationChange={panoramaControls.setCurrentRotation}
-              isRotating={panoramaControls.isRotating}
-              onRotatingChange={panoramaControls.setIsRotating}
-            />
+            <Canvas camera={{ position: [0, 0, 0], fov: 75 }}>
+              <PanoramaSphere image={tour.image} />
+            </Canvas>
 
             {/* Tour Navigation */}
             <AnimatePresence>
