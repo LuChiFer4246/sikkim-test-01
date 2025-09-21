@@ -49,7 +49,6 @@ const monasteryTours: MonasteryTour[] = [
 const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
   const meshRef = useRef<any>();
   const texture = useLoader(TextureLoader, image);
-  const material = useMemo(() => new MeshBasicMaterial({ side: BackSide, map: texture }), [texture]);
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -57,10 +56,18 @@ const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
     }
   });
 
+  useEffect(() => {
+    if (meshRef.current && texture) {
+      meshRef.current.material.map = texture;
+      meshRef.current.material.side = BackSide;
+      meshRef.current.material.needsUpdate = true;
+    }
+  }, [texture]);
+
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[10, 32, 32]} />
-      <primitive object={material} attach="material" />
+      <meshBasicMaterial />
     </mesh>
   );
 };
