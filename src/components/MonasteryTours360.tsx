@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Canvas, useFrame, useLoader, extend } from '@react-three/fiber';
-import { TextureLoader, BackSide, MeshBasicMaterial } from 'three';
-
-extend({ MeshBasicMaterial });
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { TextureLoader, BackSide } from 'three';
 import { Play, Pause, Volume2, VolumeX, RotateCcw, ChevronLeft, ChevronRight, Accessibility } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -51,7 +49,6 @@ const monasteryTours: MonasteryTour[] = [
 const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
   const meshRef = useRef<any>();
   const texture = useLoader(TextureLoader, image);
-  const material = useMemo(() => new MeshBasicMaterial({ map: texture, side: BackSide }), [texture]);
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -59,13 +56,10 @@ const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
     }
   });
 
-  console.log('Texture loaded:', texture);
-  console.log('Image URL:', image);
-
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[10, 32, 32]} />
-      <primitive object={material} attach="material" />
+      <meshBasicMaterial args={[{ map: texture, side: BackSide }]} />
     </mesh>
   );
 };
