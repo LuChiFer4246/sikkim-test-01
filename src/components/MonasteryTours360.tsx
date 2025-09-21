@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { TextureLoader, BackSide } from 'three';
+import { TextureLoader, BackSide, MeshBasicMaterial } from 'three';
 import { Play, Pause, Volume2, VolumeX, RotateCcw, ChevronLeft, ChevronRight, Accessibility } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -49,6 +49,7 @@ const monasteryTours: MonasteryTour[] = [
 const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
   const meshRef = useRef<any>();
   const texture = useLoader(TextureLoader, image);
+  const material = useMemo(() => new MeshBasicMaterial({ side: BackSide, map: texture }), [texture]);
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -59,7 +60,7 @@ const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[10, 32, 32]} />
-      <meshBasicMaterial args={[{ map: texture, side: BackSide }]} />
+      <primitive object={material} attach="material" />
     </mesh>
   );
 };
