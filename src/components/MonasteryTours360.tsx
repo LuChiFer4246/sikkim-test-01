@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-
-
 import { Play, Pause, Volume2, VolumeX, RotateCcw, ChevronLeft, ChevronRight, Accessibility } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import PanoramaViewer from './PanoramaViewer';
+import { usePanoramaControls } from '@/hooks/use-panorama-controls';
 
 interface MonasteryTour {
   id: string;
@@ -55,31 +55,12 @@ const MonasteryTours360: React.FC = () => {
   const [showAudioDescription, setShowAudioDescription] = useState(false);
   const [showControls, setShowControls] = useState(true);
   
-  // 360 panoramic viewer state
-  const [currentRotation, setCurrentRotation] = useState(0);
-  const [isRotating, setIsRotating] = useState(false);
-  const [lastMouseX, setLastMouseX] = useState(0);
+  // Use panorama controls hook
+  const panoramaControls = usePanoramaControls();
   
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const tour = monasteryTours[currentTour];
-
-  // 360 panoramic viewer handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsRotating(true);
-    setLastMouseX(e.clientX);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isRotating) return;
-    const deltaX = e.clientX - lastMouseX;
-    setCurrentRotation(prev => prev + deltaX * 0.5);
-    setLastMouseX(e.clientX);
-  };
-
-  const handleMouseUp = () => {
-    setIsRotating(false);
-  };
 
   // Keyboard navigation
   useEffect(() => {
@@ -92,7 +73,7 @@ const MonasteryTours360: React.FC = () => {
             setCurrentTour((prev) => (prev - 1 + monasteryTours.length) % monasteryTours.length);
           } else {
             // Rotate panorama left
-            setCurrentRotation(prev => prev - 10);
+            panoramaControls.setCurrentRotation(panoramaControls.currentRotation - 10);
           }
           break;
         case 'ArrowRight':
@@ -102,7 +83,7 @@ const MonasteryTours360: React.FC = () => {
             setCurrentTour((prev) => (prev + 1) % monasteryTours.length);
           } else {
             // Rotate panorama right
-            setCurrentRotation(prev => prev + 10);
+            panoramaControls.setCurrentRotation(panoramaControls.currentRotation + 10);
           }
           break;
         case ' ':
@@ -127,14 +108,14 @@ const MonasteryTours360: React.FC = () => {
         case 'r':
         case 'R':
           e.preventDefault();
-          setCurrentRotation(0);
+          panoramaControls.resetView();
           break;
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isPlaying, showTranscript, showAudioDescription, showControls]);
+  }, [isPlaying, showTranscript, showAudioDescription, showControls, panoramaControls]);
 
   const nextTour = () => {
     setCurrentTour((prev) => (prev + 1) % monasteryTours.length);
@@ -145,7 +126,7 @@ const MonasteryTours360: React.FC = () => {
   };
 
   const resetView = () => {
-    // Reset camera position logic would go here
+    panoramaControls.resetView();
     setIsPlaying(false);
   };
 
@@ -172,8 +153,8 @@ const MonasteryTours360: React.FC = () => {
             Immerse yourself in the sacred spaces of Sikkim's ancient monasteries. Navigate with keyboard, listen to audio descriptions, and read transcripts for a fully accessible experience.
           </p>
           <div className="text-sm text-orange-300 space-y-1">
-            <p>Mouse: Click & drag to explore 360° view</p>
-            <p>Keyboard: ← → (rotate view) | Shift + ← → (change tours) | Space (play/pause) | T (transcript) | A (audio) | R (reset view)</p>
+            <p>Mouse: Click & drag to look around 360°</p>
+            <p>Keyboard: ← → ↑ ↓ (look around) | Shift + ← → (change tours) | Space (play/pause) | T (transcript) | A (audio) | R (reset view)</p>
           </div>
         </motion.div>
 
@@ -181,36 +162,13 @@ const MonasteryTours360: React.FC = () => {
           {/* 360 Tour Container */}
           <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden border-2 border-orange-500/30 bg-gray-900">
             {/* 360 Panoramic Viewer */}
-            <div 
-              className="w-full h-full relative overflow-hidden cursor-grab active:cursor-grabbing"
-              style={{
-                transform: `rotateY(${currentRotation}deg)`,
-                transition: isRotating ? 'none' : 'transform 0.3s ease-out'
-              }}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              tabIndex={0}
-            >
-              <img 
-                src={tour.image} 
-                alt={`${tour.name} 360 panoramic view`} 
-                className="w-full h-full object-cover select-none"
-                style={{
-                  minWidth: '200%',
-                  transform: `translateX(${-currentRotation * 2}px)`,
-                }}
-                draggable={false}
-              />
-              
-              {/* Panoramic Navigation Indicators */}
-              <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg p-2">
-                <div className="flex items-center gap-2 text-white text-xs">
-                  <span>🔄 Drag to explore</span>
-                </div>
-              </div>
-            </div>
+            <PanoramaViewer
+              image={tour.image}
+              rotation={panoramaControls.currentRotation}
+              onRotationChange={panoramaControls.setCurrentRotation}
+              isRotating={panoramaControls.isRotating}
+              onRotatingChange={panoramaControls.setIsRotating}
+            />
 
             {/* Tour Navigation */}
             <AnimatePresence>
