@@ -11,6 +11,7 @@ import NearbyAttractions from '@/components/NearbyAttractions';
 import DiscountOffers from '@/components/DiscountOffers';
 import { ArrowRight, Leaf, Shield, Award, Phone } from 'lucide-react';
 import { AdPopup } from '@/components/AdPopup';
+import { toast } from "@/hooks/use-toast";
 const Index: React.FC = () => {
   return <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -279,9 +280,6 @@ const Index: React.FC = () => {
               const emailInput = e.currentTarget.querySelector('input[type="email"]') as HTMLInputElement;
               if (emailInput && emailInput.value) {
                 // We'll use the same subscription logic as in the footer
-                const {
-                  toast
-                } = require("@/hooks/use-toast");
                 toast({
                   title: "Success!",
                   description: "You've been subscribed to our newsletter",
