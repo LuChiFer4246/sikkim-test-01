@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { TextureLoader, SphereGeometry, BackSide } from 'three';
 import { Play, Pause, Volume2, VolumeX, RotateCcw, ChevronLeft, ChevronRight, Accessibility } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -46,23 +44,72 @@ const monasteryTours: MonasteryTour[] = [
   }
 ];
 
-const PanoramaSphere: React.FC<{ image: string }> = ({ image }) => {
-  const meshRef = useRef<any>();
-  const texture = useLoader(TextureLoader, image);
+const PanoramaViewer: React.FC<{ image: string; isPlaying: boolean }> = ({ image, isPlaying }) => {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [lastMouse, setLastMouse] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.001;
+  useEffect(() => {
+    let animationId: number;
+    if (isPlaying) {
+      const animate = () => {
+        setRotation(prev => ({ ...prev, y: prev.y + 0.2 }));
+        animationId = requestAnimationFrame(animate);
+      };
+      animationId = requestAnimationFrame(animate);
     }
-  });
+    return () => {
+      if (animationId) cancelAnimationFrame(animationId);
+    };
+  }, [isPlaying]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setLastMouse({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - lastMouse.x;
+    const deltaY = e.clientY - lastMouse.y;
+    
+    setRotation(prev => ({
+      x: Math.max(-45, Math.min(45, prev.x - deltaY * 0.3)),
+      y: prev.y + deltaX * 0.3
+    }));
+    setLastMouse({ x: e.clientX, y: e.clientY });
+  }, [isDragging, lastMouse]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[50, 32, 32]} />
-      <meshBasicMaterial>
-        <primitive object={texture} attach="map" />
-      </meshBasicMaterial>
-    </mesh>
+    <div 
+      ref={containerRef}
+      className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing relative"
+      onMouseDown={handleMouseDown}
+      style={{
+        background: `url(${image}) center/cover`,
+        transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+        transformStyle: 'preserve-3d',
+        transition: isPlaying ? 'none' : 'transform 0.1s ease-out'
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+    </div>
   );
 };
 
@@ -158,9 +205,7 @@ const MonasteryTours360: React.FC = () => {
         <div className="relative">
           {/* 360 Tour Container */}
           <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden border-2 border-orange-500/30 bg-gray-900">
-            <Canvas camera={{ position: [0, 0, 0], fov: 75 }}>
-              <PanoramaSphere image={tour.image} />
-            </Canvas>
+            <PanoramaViewer image={tour.image} isPlaying={isPlaying} />
 
             {/* Tour Navigation */}
             <AnimatePresence>
