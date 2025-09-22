@@ -24,11 +24,7 @@ const Index: React.FC = () => {
         
         
         {/* Special Promotion Banner */}
-        <div className="bg-green-700 text-white py-3 px-4 text-center shadow-md">
-          <div className="container mx-auto">
-            
-          </div>
-        </div>
+        
         
         {/* About Monasteries section */}
         <section className="section-padding container">
